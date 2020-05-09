@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+
 
 class User extends Authenticatable
 {
@@ -27,4 +27,16 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+//    //get UserAdditional
+//    public function user_additional()
+//    {
+//        return $this->hasOne(UserAdditional::class);
+//    }
+//
+//    //get roles
+//    public function roles()
+//    {
+//        return $this->belongsToMany(Role::class);
+//    }
 }
