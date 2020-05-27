@@ -6,8 +6,6 @@ class BlogCategoriesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
     public function run()
     {
@@ -20,23 +18,17 @@ class BlogCategoriesTableSeeder extends Seeder
             'parent_id' => 0,
         ];
 
-        for ($i = 1; $i <= 10; $i++) {
+        for ($i = 2; $i <= 11; $i++) {
             $categoryName = 'Категория №' . $i;
-            $parentId = 0;
-            if ($i>4) {
-                $parentId = mt_rand(1, 4);
-            }
-            else {
-                $parentId = 1;
-            }
+            $parent_id = ($i > 5) ? random_int(1, 5) : 1;
 
             $categories[] = [
                 'title'     => $categoryName,
                 'alias'     => str_slug($categoryName),
-                'parent_id' => $parentId,
+                'parent_id' => $parent_id,
             ];
         }
 
-        DB::table('blog_categories')->insert($categories);
+        DB::table('categories')->insert($categories);
     }
 }

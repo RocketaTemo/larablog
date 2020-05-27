@@ -20,19 +20,24 @@ Route::get('/', function () {
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
-$groupData = [
-    'namespace' =>'Blog\Admin',
-    'prefix' =>'admin/blog'
-];
+Route::resource('posts', 'PostController')->names('posts');
 
+//< Админка
+$groupData = [
+    'namespace' =>'Admin',
+    'prefix' =>'admin/'
+];
 Route::group($groupData, function(){
+    // Category
     $methods = ['index', 'edit', 'update', 'create', 'store'];
     Route::resource('categories', 'CategoryController')
         ->only($methods)
-        ->names('blog.admin.categories');
-});
+        ->names('admin.categories');
 
-Route::group(['namespace' => 'Blog', 'prefix' => 'blog'], function(){
-    Route::resource('posts', 'PostController')->names('blog.posts');
+    // Post
+    Route::resource('posts', 'PostController')
+        ->except(['show']) //все методы, кроме show
+        ->names('admin.posts');
 });
+//>
 
