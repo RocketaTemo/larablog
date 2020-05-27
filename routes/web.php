@@ -18,6 +18,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('posts', 'PostController')->names('posts');
@@ -25,9 +26,11 @@ Route::resource('posts', 'PostController')->names('posts');
 //< Админка
 $groupData = [
     'namespace' =>'Admin',
-    'prefix' =>'admin/'
+    'prefix' =>'admin/',
+    'middleware' => ['auth']
 ];
 Route::group($groupData, function(){
+    Route::get('/', 'DashboardController@dashboard')->name('admin.index');
     // Category
     $methods = ['index', 'edit', 'update', 'create', 'store'];
     Route::resource('categories', 'CategoryController')

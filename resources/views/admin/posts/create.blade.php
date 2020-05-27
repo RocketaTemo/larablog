@@ -1,27 +1,25 @@
-@extends('layouts.app')
+@extends('admin.layouts.app_admin')
+
 
 @section('content')
+    <form method="POST" action="{{route('admin.posts.store')}}">
+        @csrf {{--токен для защиты формы--}}
+        <div class="container">
 
-    <div class="container">
+            @component('admin.components.breadcrumb')
+                @slot('title') Создание новости @endslot
+                @slot('parent') Главная @endslot
+                @slot('active') Категории @endslot
+            @endcomponent
 
-{{--        @component('admin.components.breadcrumbs')--}}
-{{--            @slot('title') Создание новости @endslot--}}
-{{--            @slot('parent') Главная @endslot--}}
-{{--            @slot('active') Новости @endslot--}}
-{{--        @endcomponent--}}
+            @include('admin.posts.parts.result_messages')
 
-        <hr />
-        @if(!$item->exists)
-            <form method="POST" action="{{route('admin.posts.store') }}">
-                @else
-        <form class="form-horizontal" action="{{route('admin.posts.store')}}" method="post">
-            {{ csrf_field() }}
-
-            {{-- Form include --}}
-            @include('admin.posts.parts.post_create_form')
-
-            <input type="hidden" name="created_by" value="{{Auth::id()}}">
-        </form>
-    </div>
-
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    @include('admin.posts.parts.post_create')
+                </div>
+            </div>
+        </div>
+    </form>
 @endsection
+

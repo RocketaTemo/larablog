@@ -1,8 +1,3 @@
-@php
-    /** @var \App\Models\Category $item **/
-    /** @var \Illuminate\Support\Collection $categoryList **/
-@endphp
-
 <div class="row justify-content-center">
     <div class="col-md-12">
         <div class="card">
@@ -41,12 +36,12 @@
                                     class="form-control"
                                     placeholder="Выберите категорию"
                                     required>
-                                @foreach($categoryList as $category)
-                                    <option value="{{ $category->id }}"
-                                            @if($category->id == $category->parent_id) selected @endif>
-                                        {{ $category->id }} . {{ $category->title }}
-                                    </option>
-                                @endforeach
+                                    @foreach($categoryList as $categoryOption)
+                                        <option value="{{ $categoryOption->id }}"
+                                                @if($categoryOption->id === $item->parent_id) selected @endif>
+                                            {{ $categoryOption->id_title_combobox }}
+                                        </option>
+                                    @endforeach
                             </select>
                         </div>
                         <div class="form-group">

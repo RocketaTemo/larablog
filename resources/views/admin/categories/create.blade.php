@@ -1,13 +1,15 @@
-@extends('layouts.app')
+@extends('admin.layouts.app_admin')
 
 @section('content')
-    @php
-        /** @var \App\Models\Category $item */
-        /**@var \Illuminate\Support\ViewErrorBag $errors */
-    @endphp
-    <form method="POST" action="{{ route('admin.categories.store') }}">
+    <form method="POST" action="{{route('admin.categories.store')}}">
         @csrf {{--токен для защиты формы--}}
         <div class="container">
+
+            @component('admin.components.breadcrumb')
+                @slot('title') Создание категории @endslot
+                @slot('parent') Главная @endslot
+                @slot('active') Категории @endslot
+            @endcomponent
 
             @include('admin.categories.parts.result_messages')
 

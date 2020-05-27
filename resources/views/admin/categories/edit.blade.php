@@ -1,7 +1,14 @@
-@extends('layouts.app')
+@extends('admin.layouts.app_admin')
 
 @section('content')
     <div class="container">
+
+        @component('admin.components.breadcrumb')
+            @slot('title') Редактирование категории @endslot
+            @slot('parent') Главная @endslot
+            @slot('active') Категории @endslot
+        @endcomponent
+
         <form method="POST" action="{{route('admin.categories.update', $item->id)}}">
             @method('PATCH')
 

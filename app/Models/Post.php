@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Post extends Model
 {
     use SoftDeletes;
-    public $table ='posts';
+    const UNKNOWN_USER = 1;
     protected $fillable = [
         'title',
         'alias',
@@ -17,7 +17,8 @@ class Post extends Model
         'excerpt',
         'content_raw',
         'is_published',
-        'published_at'
+        'published_at',
+//        'user_id'
     ];
 
     public function user()

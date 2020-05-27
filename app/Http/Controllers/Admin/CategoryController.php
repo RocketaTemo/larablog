@@ -6,6 +6,7 @@ use App\Http\Requests\CategoryCreateRequest;
 use App\Http\Requests\CategoryUpdateRequest;
 use App\Models\Category;
 use App\Repositories\CategoryRepository;
+use Illuminate\Http\Response;
 
 /**
  * Category management
@@ -25,7 +26,7 @@ class CategoryController extends BaseController
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -38,7 +39,7 @@ class CategoryController extends BaseController
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -46,34 +47,38 @@ class CategoryController extends BaseController
         $item = new Category();
         $categoryList = $this->categoryRepository->getForComboBox();
 
-        return view('admin.categories.create', compact('categoryList'));
+        return view('admin.categories.create', compact('item','categoryList'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(CategoryCreateRequest $request)
     {
         //страница сохранения новой категории
         $data = $request->input();
-        if (empty($data['alias'])) {
-            $data['alias'] = str_slug($data['title']);
-        }
+
+//          Ушло в обсервер
+//        if (empty($data['alias'])) {
+//            $data['alias'] = str_slug($data['title']);
+//        }
 
         $item = (new Category())->create($data); //создаст объект и запишет в БД
 
-        if ($item)
+        if ($item) {
             return redirect()
                 ->route('admin.categories.edit', [$item->id]) //редирект
-                ->with(['success' => 'Успешно сохранено']); //кладет в сессию 'success'
+                ->with(['success' => 'Успешно сохранено']);
+        } //кладет в сессию 'success'
 
-        else
+        else {
             return back()
                 ->withErrors(['msg' => "Ошибка сохранения"]) //кладет в сессию ошибку
-                ->withInput(); //кладет в сессию предыдущий input
+                ->withInput();
+        } //кладет в сессию предыдущий input
 
     }
 
@@ -81,7 +86,7 @@ class CategoryController extends BaseController
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit($id)
     {
@@ -95,11 +100,11 @@ class CategoryController extends BaseController
 
     /**
      * Update the specified resource in storage.
-     *
+     * @param CategoryUpdateRequest $request
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function update(CategoryUpdateRequest $request, $id)
+    public function update(CategoryUpdateRequest $request, $id): Response
     {
         //страница сохранения категории
 
@@ -114,6 +119,7 @@ class CategoryController extends BaseController
         if (empty($data['alias'])) {
             $data['alias'] = str_slug($data['title']);
         }
+
         $result = $item
             ->fill($data) //обновляет свойства объекта модели
             ->save(); //запись в БД

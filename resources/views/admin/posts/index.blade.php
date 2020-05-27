@@ -1,17 +1,18 @@
-@extends('layouts.app')
+@extends('admin.layouts.app_admin')
 
 @section('content')
     <div class="container">
-{{--        @component('blog.admin.components.breadcrumbs')--}}
-{{--            @slot('title') Список постов @endslot--}}
-{{--            @slot('parent') Главная @endslot--}}
-{{--            @slot('active') Посты @endslot--}}
-{{--        @endcomponent--}}
+        @component('admin.components.breadcrumb')
+            @slot('title') Список новостей @endslot
+            @slot('parent') Главная @endslot
+            @slot('active') Новости @endslot
+        @endcomponent
+        <hr>
         <div class="row justify-content-center">
             <div class="col-md-12">
 {{--                @include('admin.posts.includes.result_messages')--}}
                 <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-                    <a class="btn btn-primary" href="{{route('admin.posts.create')}}"> Добавить</a>
+                    <a class="btn btn-primary pull-right" href="{{route('admin.posts.create')}}"><i class="fa fa-plus-square-o"></i> Создать новость</a>
                 </nav>
                 <div class="card">
                     <div class="card-body">
@@ -27,9 +28,6 @@
                             </thead>
                             <tbody>
                             @foreach($paginator as $post)
-                                @php
-                                    /** @var \App\Models\Post $post  */
-                                @endphp
                                 <tr @if(!$post->is_published) style="background-color: #cccc;" @endif >
                                     <td>{{ $post->id }}</td>
                                     <td>{{ $post->user->name }}</td>

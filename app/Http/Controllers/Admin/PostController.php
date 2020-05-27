@@ -7,10 +7,9 @@ use App\Repositories\CategoryRepository;
 use App\Repositories\PostRepository;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostUpdateRequest;
+use App\Http\Requests\PostCreateRequest;
+use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
-
-//use App\Http\Requests\PostCreateRequest;
-
 
 
 class PostController extends BaseController
@@ -30,7 +29,7 @@ class PostController extends BaseController
     /**
      * Display a listing of the resource
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -42,40 +41,54 @@ class PostController extends BaseController
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
         //страница создания категории
         $item = new Post();
-        $categoryList = $this->categoryRepository->getAllWithPaginate();
+        $categoryList = $this->categoryRepository->getForComboBox();
 
-        return view('admin.posts.create', compact('paginator'));
+        return view('admin.posts.create', compact('item','categoryList'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param PostCreateRequest $request
+     * @return Response
      */
-    public function store(Request $request)
+    public function store(PostCreateRequest $request)
     {
-        $article = Article::create($request->all());
+        //страница сохранения нового поста
+        $data = $request->input();
 
-        // Categories
-        if ($request->input('categories')) :
-            $article->categories()->attach($request->input('categories'));
-        endif;
+//          Ушло в обсервер
+//        if (empty($data['alias'])) {
+//            $data['alias'] = str_slug($data['title']);
+//        }
 
-        return redirect()->route('admin.article.index');
+        $item = (new Post())->create($data); //создаст объект и запишет в БД
+
+        if ($item) {
+            return redirect()
+                ->route('admin.posts.edit', [$item->id]) //редирект
+                ->with(['success' => 'Успешно сохранено']);
+        } //кладет в сессию 'success'
+
+        else {
+            return back()
+                ->withErrors(['msg' => "Ошибка сохранения"]) //кладет в сессию ошибку
+                ->withInput();
+        } //кладет в сессию предыдущий input
+
     }
 
     /**
      * Display the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function show($id)
     {
@@ -104,7 +117,7 @@ class PostController extends BaseController
      *
      * @param PostUpdateRequest $request
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(PostUpdateRequest $request, $id)
     {
@@ -119,14 +132,14 @@ class PostController extends BaseController
         $data = $request->all(); // поулчаем все request-данные которые приходят
 
         //нужен Observer
-        if (empty($data['alias'])) {
-            $data['alias'] = str_slug($data['title']); // генерация ЧПУ
-        }
-        if (empty($item->published_at) && $data['is_published']) {
-            $data['published_at'] = Carbon::now(); // получаем текущее время
-        }
+//        if (empty($data['alias'])) {
+//            $data['alias'] = str_slug($data['title']); // генерация ЧПУ
+//        }
+//        if (empty($item->published_at) && $data['is_published']) {
+//            $data['published_at'] = Carbon::now(); // получаем текущее время
+//        }
 
-        $result = $item->update($data); // обновляем данные модель Post->update()
+        $result = $item->update($data); // обновляем данные, модель Post->update()
 
         if ($result) {
             return redirect() // обновление страницы с выводом соотв. сообщения
@@ -143,7 +156,7 @@ class PostController extends BaseController
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy($id)
     {
