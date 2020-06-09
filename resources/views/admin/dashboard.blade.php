@@ -28,14 +28,22 @@
             <div class="col-sm-6">
                 <a class="btn btn-block btn-default" href="{{route('admin.categories.create')}}">Создать категорию</a>
                 <a class="list-group-item" href="#">
-                    <h4 class="list-group-item-heading">Категория первая</h4>
+                    <h4 class="list-group-item-heading">======</h4>
                     <p class="list-group-item-text">
-                        Кол-во материалов
+                        Новость
                     </p>
                 </a>
+{{--                @foreach($categories as $category)--}}
+{{--                <a class="list-group-item" href="{{route('admin.categories.edit', $category)}}">--}}
+{{--                    <h4 class="list-group-item-heading">{{$category->title}}</h4>--}}
+{{--                    <p class="list-group-item-text">--}}
+{{--                        {{$category->post()->count()}}--}}
+{{--                    </p>--}}
+{{--                </a>--}}
+{{--                @endforeach--}}
             </div>
             <div class="col-sm-6">
-                <a class="btn btn-block btn-default" href="{{route('admin.posts.create')}}">Создать пост</a>
+                <a class="btn btn-block btn-default" href="{{route('admin.posts.create')}}">Создать новость</a>
                 <a class="list-group-item" href="#">
                     <h4 class="list-group-item-heading">Пост первый</h4>
                     <p class="list-group-item-text">

@@ -34,7 +34,7 @@ class CategoryObserver
     protected function setAlias(Category $category): void
     {
         if (empty($category->alias)) {
-            $category->alias = Str::slug($category->title);
+            $category->alias = str_slug($category->title);
         }
     }
 

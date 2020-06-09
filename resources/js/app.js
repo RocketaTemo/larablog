@@ -12,6 +12,7 @@ require('./bootstrap');
 //     ckeditor.replace( 'content_raw' );
 //     ckeditor.replace( 'excerpt' );
 // });
+CKEDITOR.replace( 'content_raw' );
 window.Vue = require('vue');
 
 /**

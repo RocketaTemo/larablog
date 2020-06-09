@@ -13,7 +13,7 @@ use Illuminate\Http\Response;
  *
  * @package App\Http\Controllers\Admin
  */
-class CategoryController extends BaseController
+class CategoryController extends AdminBaseController
 {
     private $categoryRepository;
 
@@ -53,7 +53,7 @@ class CategoryController extends BaseController
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param CategoryCreateRequest $request
      * @return Response
      */
     public function store(CategoryCreateRequest $request)
@@ -100,6 +100,7 @@ class CategoryController extends BaseController
 
     /**
      * Update the specified resource in storage.
+     *
      * @param CategoryUpdateRequest $request
      * @param int $id
      * @return Response

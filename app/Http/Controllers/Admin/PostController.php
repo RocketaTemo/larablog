@@ -10,9 +10,10 @@ use App\Http\Requests\PostUpdateRequest;
 use App\Http\Requests\PostCreateRequest;
 use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
+use Gate;
 
 
-class PostController extends BaseController
+class PostController extends AdminBaseController
 {
 
     private $postRepository;
@@ -33,6 +34,10 @@ class PostController extends BaseController
      */
     public function index()
     {
+//        if(Gate::denies('check-posts')){
+//            return redirect()->back()->withErrors(['action' => 'Gate error']);
+//        }
+
         //страница вывода списка постов
         $paginator = $this->postRepository->getAllWithPaginate();
         return view('admin.posts.index', compact('paginator'));
@@ -45,7 +50,7 @@ class PostController extends BaseController
      */
     public function create()
     {
-        //страница создания категории
+        //страница создания поста
         $item = new Post();
         $categoryList = $this->categoryRepository->getForComboBox();
 

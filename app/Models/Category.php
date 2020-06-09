@@ -15,4 +15,15 @@ class Category extends Model
         'parent_id',
         'description',
     ];
+
+//    public function getParentCategory()
+//    {
+//        return $this->belongsTo(Category::class, 'parent_id', 'id');
+//    }
+
+//    public function post()
+//    {
+//        return $this->morphedByMany(Post::class, 'posts'); //relationships
+//    }
+
 }

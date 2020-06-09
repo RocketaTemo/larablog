@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Post extends Model
 {
     use SoftDeletes;
-    const UNKNOWN_USER = 1;
+
     protected $fillable = [
         'title',
         'alias',
@@ -25,9 +25,9 @@ class Post extends Model
     {
         return $this->belongsTo(User::class); //relationships
     }
-
     public function category()
     {
         return $this->belongsTo(Category::class); //relationships
     }
+
 }

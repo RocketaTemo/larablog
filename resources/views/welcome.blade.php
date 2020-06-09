@@ -13,6 +13,7 @@
         <!-- Styles -->
         <style>
             html, body {
+                {{--background: url("{{asset('')}}");--}}
                 background-color: #fff;
                 color: #636b6f;
                 font-family: 'Nunito', sans-serif;

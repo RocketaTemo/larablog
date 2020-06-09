@@ -67,6 +67,11 @@ class CategoryRepository extends BaseRepository
         $result = $this
             ->startConditions()
             ->select($columns)
+//            ->with([// !!(Оптимизация запросов к БД)
+//                'parentCategory' => function ($query) {
+//                    $query->select(['id', 'title']);
+//                }
+//            ])
             ->paginate($perPage);
 
         return $result;

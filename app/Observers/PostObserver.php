@@ -36,6 +36,12 @@ class PostObserver
 
     }
 
+    /**
+     * Handle the blog post "created" event.
+     *
+     * @param Post $post
+     * @return void
+     */
     public function created(Post $post): void
     {
         //
@@ -57,7 +63,7 @@ class PostObserver
      */
     public function deleting(Post $post)
     {
-        //  dd(__METHOD__, $blogPost);
+        //  dd(__METHOD__, $post);
         //  return false; // ничего не произойдет
     }
 
@@ -123,14 +129,14 @@ class PostObserver
     }
 
     /**
-     * Утсановка значения полю  content_html относительно поля content_raw
+     * Утсановка значения полю content_html относительно поля content_raw
      *
      * @param Post $post
      */
     protected function setHtml(Post $post): void
     {
-        if ($post->isDirty('content_raw')) { // єто поле изменено? dirty
-
+        if ($post->isDirty('content_raw')) { // это поле изменено? dirty
+            //markdown
             $post->content_html = $post->content_raw;
         }
     }
@@ -145,10 +151,4 @@ class PostObserver
     {
         $post->user_id = auth()->id() ?? $post::UNKNOWN_USER;
     }
-    /**
-     * Handle the blog post "created" event.
-     *
-     * @param Post $post
-     * @return void
-     */
 }

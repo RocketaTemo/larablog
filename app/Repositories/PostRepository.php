@@ -45,7 +45,7 @@ class PostRepository extends BaseRepository
             ->startConditions()
             ->select($columns)
             ->orderBy('id', 'DESC') // сортировка по id в обратном порядке
-//            ->with(['category', 'user'])
+//          ->with(['category', 'user'])
             ->with([// !!(Оптимизация запросов к БД) загрузка отношений для категории и юзера
                 'user' => function ($query) {
                     $query->select(['id', 'name']);

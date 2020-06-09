@@ -11,13 +11,10 @@
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#maindata" role="tab">Основные данные</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#adddata" role="tab">Доп. данные</a>
-                    </li>
                 </ul>
                 <br>
                 <div class="tab-content">
-                    <div class="tab-pane" id="maindata" role="tabpanel">
+                    <div class="tab-pane-active" id="maindata" role="tabpanel">
                         <div class="form-group">
                             <label for="title">Заголовок</label>
                             <input name="title" value="{{ $item->title }}"
@@ -43,8 +40,27 @@
                                       class="form-control"
                                       rows="3"
                                       required>
-
                             </textarea>
+                        </div>
+                        <label for="category_id">Категория</label>
+                        <select name="category_id"
+                                id="category_id"
+                                class="form-control"
+                                placeholder="Выберите категорию"
+                                required>
+                            @foreach($categoryList as $categoryOption)
+                                <option value="{{ $categoryOption->id }}"
+                                        @if($categoryOption->id === $item->category_id) selected @endif>
+                                    {{ $categoryOption->id_title_combobox }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <div class="form-group">
+                            <label for="alias">ЧПУ статьи</label>
+                            <input name="alias" value="{{ $item->alias }}"
+                                   id="alias"
+                                   type="text"
+                                   class="form-control">
                         </div>
                         <div class="form-check">
                             <input name="is_published"
@@ -55,47 +71,16 @@
                                    class="form-check-input"
                                    value="{{$item->is_published}}"
                                    @if($item->is_published)
-                                   checked="checked"@endif
-                            >
+                                   checked="checked"@endif>
                             <label class="form-check-label" for="is_published">Опубликовано</label>
                         </div>
                     </div>
-                    <div class="tab-pane" id="adddata" role="tabpanel">
-                        <div class="form-group">
-                            <label for="category_id">Категория</label>
-                            <select name="category_id"
-                                    id="category_id"
-                                    class="form-control"
-                                    placeholder="Выберите категорию"
-                                    required>
-                                @foreach($categoryList as $categoryOption)
-                                    <option value="{{ $categoryOption->id }}"
-                                            @if($categoryOption->id === $item->category_id) selected @endif>
-                                        {{ $categoryOption->id_title_combobox }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            <div class="form-group">
-                                <label for="alias">ЧПУ статьи</label>
-                                <input name="alias" value="{{ $item->alias }}"
-                                       id="alias"
-                                       type="text"
-                                       class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="description">Описание</label>
-                                <textarea name="description"
-                                          id="description"
-                                          class="form-control"
-                                          rows="3">
-                                </textarea>
-                            </div>
-                            <div class="row justify-content-center">
-                                <div class="col-auto">
-                                    <div class="car">
-                                        <div class="card-body">
-                                            <button type="submit" class="btn btn-primary">Сохранить</button>
-                                        </div>
+                    <div class="form-group">
+                        <div class="row justify-content-center">
+                            <div class="col-auto">
+                                <div class="car">
+                                    <div class="card-body">
+                                        <button type="submit" class="btn btn-primary">Сохранить</button>
                                     </div>
                                 </div>
                             </div>
@@ -105,4 +90,5 @@
             </div>
         </div>
     </div>
+</div>
 </div>

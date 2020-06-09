@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 //use Your Model
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Application;
 
 
 /**
@@ -33,7 +34,7 @@ abstract class BaseRepository
     abstract protected function getModelClass();
 
     /**
-     * @return Model|\Illuminate\Foundation\Application|mixed
+     * @return Model|Application|mixed
      */
     protected function startConditions()
     {
