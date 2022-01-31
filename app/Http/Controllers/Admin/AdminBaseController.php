@@ -13,6 +13,8 @@ use App\Http\Controllers\BaseController as GuestBaseController;
 abstract class AdminBaseController extends GuestBaseController
 {
 
+
+
     /**
      * AdminBaseController constructor.
      */
